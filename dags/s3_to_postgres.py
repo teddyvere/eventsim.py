@@ -32,7 +32,7 @@ with DAG(
             'lastname', 'firstname', 'registration', 'gender', 'artist', 'song', 'length'
         ),
         sql_conn_id='postgres_connection',
-        sql_conn_id='aws_connection'
+        sql_conn_id='aws_connection',
         dag=dag
     )
 
