@@ -25,7 +25,7 @@ with DAG(
         task_id='sensor_s3_key',
         aws_conn_id='aws_connection',
         bucket_name='eventsim',
-        bucket_key='eventsim/10000',
+        bucket_key='eventsim/10000.json',
         mode='poke',
         poke_interval=30,
     )
@@ -33,7 +33,7 @@ with DAG(
     transfer_s3_to_sql = S3ToSqlOperator(
         task_id='transfer_s3_to_postgres',
         s3_bucket='eventsim',
-        s3_key='eventsim/10000',
+        s3_key='eventsim/10000.json',
         parser=json_parser,
         table='events',
         column_list=(
