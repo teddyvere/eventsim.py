@@ -13,7 +13,7 @@ with DAG(
     default_args={"retries": 1},
     catchup=False
 ):
-    @tast_group(default_args={"retires": 3})
+    @task_group(default_args={"retires": 3})
     def group1():
         task1 = EmptyOperator(task_id="task1")
         task2 = BashOperator(task_id="task2",
