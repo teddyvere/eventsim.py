@@ -7,11 +7,14 @@ from airflow.providers.amazon.aws.transfers.s3_to_sql import S3ToSqlOperator
 
 def json_parser(filepath):
     import json
+    from datetime import datetime
+
     import pandas as pd
 
     with open(filepath) as f:
         json_data = json.load(f)
-        df = pd.DataFrame(json_data['body'])
+        df = pd.DataFrame(json_data['body'], dtype={'ts': datetime})
+        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/1000))
         return df.values
     
 with DAG(
