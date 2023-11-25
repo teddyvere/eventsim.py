@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from airflow import DAG
+from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 from airflow.providers.amazon.aws.transfers.s3_to_sql import S3ToSqlOperator
 
 
@@ -15,11 +16,20 @@ def json_parser(filepath):
     
 with DAG(
     dag_id='s3_to_postgres',
-    start_date=datetime(2023, 11, 24),
+    start_date=datetime(2022, 10, 1),
     schedule='@once',
     catchup=False
 ) as dag:
     
+    s3_key_sensor = S3KeySensor(
+        task_id='sensor_s3_key',
+        aws_conn_id='aws_connection',
+        bucket_name='eventsim',
+        buket_key='eventsim/10000',
+        mode='poke',
+        poke_interval=30,
+    )
+
     transfer_s3_to_sql = S3ToSqlOperator(
         task_id='transfer_s3_to_postgres',
         s3_bucket='eventsim',
@@ -36,5 +46,5 @@ with DAG(
         dag=dag
     )
 
-transfer_s3_to_sql
+s3_key_sensor >> transfer_s3_to_sql
     
