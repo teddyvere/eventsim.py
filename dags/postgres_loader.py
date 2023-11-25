@@ -26,7 +26,7 @@ with DAG('postgres_loader',
     
     sql_sensor = SqlSensor(task_id='wait_for_condition',
                            conn_id='postgres_connection',
-                           sql="SELECT COUNT(*) FROM sample_table where KEY='hello",
+                           sql="SELECT COUNT(*) FROM sample_table where KEY='hello'",
                            mode='poke',
                            poke_interval=30,
                            dag=dag)

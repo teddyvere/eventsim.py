@@ -2,7 +2,7 @@ from datetime import datetime
 from airflow import DAG 
 from airflow.decorators import task_group
 from airflow.operators.bash import BashOperator
-from airflow.operators.empty import EmptyOpe    
+from airflow.operators.empty import EmptyOperator  
 from airflow.utils.edgemodifier import Label
 
 
