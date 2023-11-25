@@ -13,7 +13,7 @@ def json_parser(filepath):
 
     with open(filepath) as f:
         json_data = json.load(f)
-        df = pd.DataFrame(json_data['body'], dtype={'ts': datetime})
+        df = pd.DataFrame(json_data['body'])
         df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/1000))
         return df.values
     
