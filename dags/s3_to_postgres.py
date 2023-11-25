@@ -17,8 +17,9 @@ def json_parser(filepath):
 with DAG(
     dag_id='s3_to_postgres',
     start_date=datetime(2022, 10, 1),
+    execution_date=datetime(2022, 10, 1)
     schedule='@once',
-    catchup=False
+    catchup=True
 ) as dag:
     
     s3_key_sensor = S3KeySensor(
