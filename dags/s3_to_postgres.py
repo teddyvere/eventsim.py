@@ -4,7 +4,7 @@ from airflow import DAG
 from airflow.providers.amazon.aws.transfers.s3_to_sql import S3ToSqlOperator
 
 
-def parser(filepath):
+def json_parser(filepath):
     import json
     import pandas as pd
 
@@ -24,7 +24,7 @@ with DAG(
         task_id='transfer_s3_to_postgres',
         s3_bucket='eventsim',
         s3_key='eventsim/10000',
-        parser=,
+        parser=json_parser,
         table='events',
         column_list=(
             'id', 'ts', 'userid', 'sessionid', 'page', 'auth', 
