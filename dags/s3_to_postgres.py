@@ -37,9 +37,9 @@ with DAG(
         parser=json_parser,
         table='events',
         column_list=(
-            'ts', 'userid', 'sessionid', 'page', 'auth', 'method', 
-            'status', 'level', 'iteminsession', 'location', 'useragent', 'lastname', 
-            'firstname', 'registration', 'gender', 'artist', 'song', 'length'
+            'ts', 'userId', 'sessionId', 'page', 'auth', 'method', 
+            'status', 'level', 'itemInSession', 'location', 'userAgent', 'lastName', 
+            'firstName', 'registration', 'gender', 'artist', 'song', 'length'
         ),
         sql_conn_id='postgres_connection',
         aws_conn_id='aws_connection',
