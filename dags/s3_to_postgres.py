@@ -25,7 +25,7 @@ with DAG(
         task_id='sensor_s3_key',
         aws_conn_id='aws_connection',
         bucket_name='eventsim',
-        buket_key='eventsim/10000',
+        bucket_key='eventsim/10000',
         mode='poke',
         poke_interval=30,
     )
