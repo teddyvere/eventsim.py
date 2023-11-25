@@ -15,7 +15,7 @@ def json_parser(filepath):
     
 with DAG(
     dag_id='s3_to_postgres',
-    start_date=datetime(2023, 11, 24)
+    start_date=datetime(2023, 11, 24),
     schedule='@once',
     catchup=False
 ) as dag:
