@@ -14,7 +14,7 @@ def get_target_key(ti) -> str:
 
 with DAG (
     dag_id='S3_bronze_to_silver',
-    start_date=datetime('2023-11-30'),
+    start_date=datetime(2023,11,30),
     schedule='@once',
     catchup=False
 ) as dag:
