@@ -6,8 +6,11 @@ from airflow.providers.amazon.aws.operators.s3 import S3FileTransformOperator
 from airflow.providers.amazon.aws.operators.s3 import S3ListOperator
 
 
-def get_target_key(ti) -> str:
-    print(ti)
+def get_target_key(**context) -> str:
+    lists = context["lists"]
+    exec_date = context["exec_date"]
+    print(lists)
+    print(exec_date)
 
 
 
@@ -30,8 +33,8 @@ with DAG (
     get_target_S3_key = PythonOperator(
         task_id='get_target_S3_key',
         python_callable=get_target_key,
-        op_kargs={
-            'lists': context[ti].xcom_pull(task_ids='list_up_S3'),
-            'execution_date': {{execution_date}}
+        op_kwargs = {
+            "lists": "{{ti.xcom_pull(task_ids='list_up_S3')}}",
+            "exec_date": " {{ ds }} "
         }
     )
