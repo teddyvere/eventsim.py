@@ -12,7 +12,7 @@ def get_target_key(ti) -> str:
 
 
 
-with DAG as (
+with DAG (
     dag_id='S3_bronze_to_silver',
     start_date=datetime('2023-11-30'),
     schedule='@once',
@@ -20,9 +20,10 @@ with DAG as (
 ) as dag:
     
     list_up_S3 = S3ListOperator(
-        bucket = 'eventsim',
-        prefix = 'raw/',
-        aws_conn_id = 'aws_connection',
+        task_id='list_up_S3',
+        bucket='eventsim',
+        prefix='raw/',
+        aws_conn_id='aws_connection',
         provide_context=True
     )
 
