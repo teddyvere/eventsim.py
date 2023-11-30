@@ -22,12 +22,11 @@ with DAG (
     catchup=False
 ) as dag:
     
-    list_up_S3 = S3ListOperator(
+    S3_file = S3ListOperator(
         task_id='list_up_S3',
         bucket='eventsim',
         prefix='raw/',
-        aws_conn_id='aws_connection',
-        provide_context=True
+        aws_conn_id='aws_connection'
     )
 
     get_target_S3_key = PythonOperator(
