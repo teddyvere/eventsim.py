@@ -30,7 +30,7 @@ with DAG as (
         task_id='get_target_S3_key',
         python_callable=get_target_key,
         op_kargs={
-            'lists': ti.xcom_pull(task_ids='list_up_S3'),
+            'lists': context[ti].xcom_pull(task_ids='list_up_S3'),
             'execution_date': {{execution_date}}
         }
     )
