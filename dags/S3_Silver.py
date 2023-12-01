@@ -22,7 +22,7 @@ def get_json_from_s3(ti):
     )
     # Creating Object From the S3 Resource
     obj = s3_session.get_object(Bucket='eventsim', 
-                                Key="eventsim/date_id='{{ds}}'.json")
+                                Key="eventsim/date_id={{ds}}.json")
 
     if obj == 200:
         print(f"Success S3 get_object response {obj}")
@@ -47,7 +47,7 @@ with DAG (
         task_id='sensor_S3_key',
         aws_conn_id='aws_connection',
         bucket_name='eventsim',
-        bucket_key="eventsim/date_id='{{ds}}'.json",
+        bucket_key="eventsim/date_id={{ds}}.json",
         mode='poke',
         poke_interval=30,
         timeout=300
