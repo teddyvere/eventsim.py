@@ -6,8 +6,7 @@ import pandas as pd
 from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.python import PythonOperator
-from airflow.providers.amazon.aws.operators.s3 import S3FileTransformOperator
-from airflow.providers.amazon.aws.operators.s3 import S3ListOperator
+from airflow.providers.amazon.aws.operators.s3 import S3KeySonsor
 
 
 def get_json_from_s3(ti):
