@@ -19,7 +19,7 @@ def create_silver_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    s3_key = f"eventsim/date_id={context['execution_date']}.csv"
+    s3_key = f"eventsim/date_id={context['execution_date']}-test.csv"
     response = s3_client.get_object(Bucket='eventsim', Key=s3_key)
     
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
@@ -41,7 +41,7 @@ def create_silver_from_s3(**context):
                     df_daily = df[df.date_id==yyyymmdd]
                     # Check whether daily dataframe is already exist on S3
                     response = s3_client.get_object(
-                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}'
+                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
                         )
                     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
                     # Found daily dataframe on S3 -> append
@@ -57,7 +57,7 @@ def create_silver_from_s3(**context):
                     with io.StringIO() as csv_buffer:
                         df_merge.to_csv(csv_buffer, index=False)
                         response = s3_client.put_object(
-                            Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}', Body=csv_buffer.getvalue()
+                            Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv', Body=csv_buffer.getvalue()
                         )
                         if status == 200:
                             print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
