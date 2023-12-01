@@ -11,7 +11,8 @@ from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 
 def get_json_from_s3(**context):
     conn_info = Variable.get("AWS_S3_CONN", deserialize_json=True)
-    print(context['exec_date'])
+    s3_key = f"eventsim/date_id={context['exec_date']}.json"
+    print("s3_key", s3_key)
     # Creating Session with Boto3
     s3_session = boto3.client(
         's3',
@@ -19,9 +20,8 @@ def get_json_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    print("eventsim/date_id={{ds}}.json")
     obj = s3_session.get_object(Bucket='eventsim', 
-                                Key=f"eventsim/date_id={context['exec_date']}.json")
+                                Key=s3_key)
 
     if obj == 200:
         print(f"Success S3 get_object response {obj}")
