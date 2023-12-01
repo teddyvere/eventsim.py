@@ -1,7 +1,8 @@
+import io
+import os
 from datetime import datetime
 
 import boto3
-import jsonlines
 import pandas as pd
 from airflow import DAG
 from airflow.models import Variable
@@ -9,9 +10,8 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 
 
-def get_json_from_s3(**context):
+def create_silver_from_s3(**context):
     conn_info = Variable.get("AWS_S3_CONN", deserialize_json=True)
-    s3_key = f"eventsim/date_id={context['exec_date']}.json"
     # Creating Session with Boto3
     s3_client = boto3.client(
         's3',
@@ -19,8 +19,8 @@ def get_json_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    response = s3_client.get_object(Bucket='eventsim', 
-                                Key='eventsim/date_id=2023-12-01.jsonl')
+    s3_key = f"eventsim/date_id={context['execution_date']}.csv"
+    response = s3_client.get_object(Bucket='eventsim', Key=s3_key)
     
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
@@ -29,12 +29,40 @@ def get_json_from_s3(**context):
         file_content = response.get("Body")
         chunk_size=300000
         while True:
-            chunk = file_content.read(chunk_size).decode('utf-8')
+            chunk = file_content.read(chunk_size)
             if chunk:
-                json_data = jsonlines.Reader(chunk)
-                df = pd.DataFrame(json_data)
-                df['date_id'] = df['ts'].map(lambda ts: datetime.strftime(datetime.fromtimestamp(ts/1000), '%Y-%m-%d'))
-                print(df)
+                df = pd.read_csv(chunk)
+                df['date_id'] = df['ts'].map(
+                    lambda ts: datetime.strftime(
+                        datetime.fromtimestamp(ts/1000), '%Y-%m-%d'
+                        )
+                    )
+                for yyyymmdd in df['date_id'].unique():
+                    df_daily = df[df.date_id==yyyymmdd]
+                    # Check whether daily dataframe is already exist on S3
+                    response = s3_client.get_object(
+                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}'
+                        )
+                    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+                    # Found daily dataframe on S3 -> append
+                    if status == 200:
+                        df_exist = pd.read_csv(response.get("Body"))
+                        df_merge = pd.merge([df_exist, df_daily], axis=0)
+                    # Cannot find daily dataframe on S3 -> newly insert
+                    elif status == 404:
+                        df_merge = df_daily  
+                    else:
+                        raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
+                    # Update daily dataframe on S3
+                    with io.StringIO() as csv_buffer:
+                        df_merge.to_csv(csv_buffer, index=False)
+                        response = s3_client.put_object(
+                            Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}', Body=csv_buffer.getvalue()
+                        )
+                        if status == 200:
+                            print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
+                        else:
+                            print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
             else:
                 break
     else:
@@ -57,12 +85,11 @@ with DAG (
         timeout=300
     )
 
-    read_json_on_s3 = PythonOperator(
-        task_id="read_json_on_s3",
-        python_callable=get_json_from_s3,
-        provide_context=True,
-        op_kwargs={"exec_date": "{{ds}}"}
+    create_silver_s3 = PythonOperator(
+        task_id="create_silver_s3",
+        python_callable=create_silver_from_s3,
+        provide_context=True
     )
 
-S3_key_sensor >> read_json_on_s3
+S3_key_sensor >> create_silver_s3
 
