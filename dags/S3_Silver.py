@@ -1,7 +1,7 @@
-import json
 from datetime import datetime
 
 import boto3
+import jsonlines
 import pandas as pd
 from airflow import DAG
 from airflow.models import Variable
@@ -20,7 +20,7 @@ def get_json_from_s3(**context):
     )
     # Creating Object From the S3 Resource
     response = s3_client.get_object(Bucket='eventsim', 
-                                Key='eventsim/date_id=2023-12-01.json')
+                                Key='eventsim/date_id=2023-12-01.jsonl')
     
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
@@ -31,9 +31,9 @@ def get_json_from_s3(**context):
         while True:
             chunk = file_content.read(chunk_size).decode('utf-8')
             if chunk:
-                json_data = json.loads(file_content)
+                json_data = jsonlines.Reader(chunk)
                 df = pd.DataFrame(json_data)
-                df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
+                df['date_id'] = df['ts'].map(lambda ts: datetime.strftime(datetime.fromtimestamp(ts/1000), '%Y-%m-%d'))
                 print(df)
             else:
                 break
@@ -65,3 +65,4 @@ with DAG (
     )
 
 S3_key_sensor >> read_json_on_s3
+
