@@ -21,12 +21,11 @@ def get_json_from_s3(**context):
     # Creating Object From the S3 Resource
     response = s3_client.get_object(Bucket='eventsim', 
                                 Key='eventsim/date_id=2023-12-01.json')
-    print(response)
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
     if status == 200: 
     # Reading Json from S3
-        file_content = response.get()['Body'].read().decode('utf-8')
+        file_content = response.get("Body").read().decode('utf-8')
         json_data = json.loads(file_content)
         df = pd.DataFrame(json_data)
         df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
