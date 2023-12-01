@@ -27,7 +27,7 @@ def create_silver_from_s3(**context):
     if status == 200: 
     # Reading Json from S3
         file_content = response.get("Body")
-        chunk_size=300000
+        chunk_size=30000
         while True:
             chunk = file_content.read(chunk_size)
             if chunk:
