@@ -20,7 +20,7 @@ def get_json_from_s3(**context):
     )
     # Creating Object From the S3 Resource
     obj = s3_session.get_object(Bucket='eventsim', 
-                                Key=s3_key)
+                                Key='eventsim/date_id=2023-12-01.json')
     
     # Reading Json from S3
     file_content = obj.get()['Body'].read().decode('utf-8')
