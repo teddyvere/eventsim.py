@@ -21,7 +21,7 @@ def get_json_from_s3(ti):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    obj = s3_session.Object('eventsim', 'eventsim/date_id=2023-12-01.json')
+    obj = s3_session.object('eventsim', 'eventsim/date_id=2023-12-01.json')
     
     # Reading the File as String With Encoding
     file_content = obj.get()['Body'].read().decode('utf-8')
