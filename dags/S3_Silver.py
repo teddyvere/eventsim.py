@@ -30,6 +30,7 @@ def create_silver_from_s3(**context):
         chunk_size=30000
         while True:
             chunk = file_content.read(chunk_size)
+            print(chunk)
             if chunk:
                 df = pd.read_csv(chunk)
                 df['date_id'] = df['ts'].map(
