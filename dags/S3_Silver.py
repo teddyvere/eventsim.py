@@ -26,7 +26,7 @@ def get_json_from_s3(**context):
 
     if status == 200: 
     # Reading Json from S3
-        file_content = response.get("Body")['body']
+        file_content = response.get("Body")
         chunk_size=300000
         while True:
             chunk = file_content.read(chunk_size).decode('utf-8')
