@@ -1,18 +1,32 @@
+import json
 from datetime import datetime
 
+import boto3
+import pandas as pd
 from airflow import DAG
+from airflow.models import Variable
 from airflow.operators.python import PythonOperator
 from airflow.providers.amazon.aws.operators.s3 import S3FileTransformOperator
 from airflow.providers.amazon.aws.operators.s3 import S3ListOperator
 
 
-def get_target_key(**context) -> str:
-    lists = context["lists"]
-    exec_date = context["exec_date"]
-    print(lists)
-    print(exec_date)
-
-
+def get_json_from_s3(ti):
+    conn_info = Variable.get("AWS_S3_CONN", deserialize_json=True)
+    print(conn_info['AWS_S3_BUCKET'])
+    print(conn_info['AWS_ACCESS_KEY_ID'])
+    print(conn_info['AWS_SECRET_ACCESS_KEY'])
+    # Creating Session with Boto3
+    s3_session = boto3.client(
+        's3',
+        aws_access_key_id=conn_info['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
+    )
+    # Creating Object From the S3 Resource
+    obj = s3_session.Object('eventsim', 'eventsim/date_id=2023-12-01.json')
+    
+    # Reading the File as String With Encoding
+    file_content = obj.get()['Body'].read().decode('utf-8')
+    json_data = json.loads(file_content)
 
 
 with DAG (
@@ -22,18 +36,18 @@ with DAG (
     catchup=False
 ) as dag:
     
-    S3_file = S3ListOperator(
-        task_id='list_up_S3',
-        bucket='eventsim',
-        prefix='raw/',
-        aws_conn_id='aws_connection'
+    S3_key_sensor = S3KeySensor(
+        task_id='sensor_S3_key',
+        aws_conn_id='aws_connection',
+        bucket_name='eventsim',
+        bucket_key="eventsim/date_id='{{ds}}'.json",
+        mode='poke',
+        poke_interval=30,
+        timeout=300
     )
 
-    get_target_S3_key = PythonOperator(
-        task_id='get_target_S3_key',
-        python_callable=get_target_key,
-        op_kwargs = {
-            "lists": "{{ti.xcom_pull(task_ids='list_up_S3')}}",
-            "exec_date": " {{ ds }} "
-        }
+    read_json_on_s3 = PythonOperator(
+        task_id="read_json_on_s3",
+        python_callable=get_json_from_s3,
+        provide_context=True
     )
