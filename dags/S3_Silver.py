@@ -79,7 +79,7 @@ with DAG (
         task_id='sensor_S3_key',
         aws_conn_id='aws_connection',
         bucket_name='eventsim',
-        bucket_key="eventsim/date_id={{ds}}.json",
+        bucket_key="eventsim/date_id={{ds}}-test.csv",
         mode='poke',
         poke_interval=30,
         timeout=300
