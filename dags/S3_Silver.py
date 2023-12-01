@@ -21,6 +21,7 @@ def get_json_from_s3(ti):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
+    print("eventsim/date_id={{ds}}.json")
     obj = s3_session.get_object(Bucket='eventsim', 
                                 Key="eventsim/date_id='{{ds}}'.json")
 
@@ -47,7 +48,7 @@ with DAG (
         task_id='sensor_S3_key',
         aws_conn_id='aws_connection',
         bucket_name='eventsim',
-        bucket_key="eventsim/date_id='{{ds}}'.json",
+        bucket_key="eventsim/date_id={{ds}}.json",
         mode='poke',
         poke_interval=30,
         timeout=300
