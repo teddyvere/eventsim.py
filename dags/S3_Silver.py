@@ -12,7 +12,6 @@ from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 def get_json_from_s3(**context):
     conn_info = Variable.get("AWS_S3_CONN", deserialize_json=True)
     s3_key = f"eventsim/date_id={context['exec_date']}.json"
-    print(conn_info)
     # Creating Session with Boto3
     s3_client = boto3.client(
         's3',
@@ -20,16 +19,19 @@ def get_json_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    obj = s3_client.get_object(Bucket='eventsim', 
+    response = s3_client.get_object(Bucket='eventsim', 
                                 Key='eventsim/date_id=2023-12-01.json')
-    
-    # Reading Json from S3
-    file_content = obj.get()['Body'].read().decode('utf-8')
-    json_data = json.loads(file_content)
+    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
-    df = pd.DataFrame(json_data)
-    df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
-    print(df)
+    if status == 200: 
+    # Reading Json from S3
+        file_content = response.get()['Body'].read().decode('utf-8')
+        json_data = json.loads(file_content)
+        df = pd.DataFrame(json_data)
+        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
+        print(df)
+    else:
+        print(f"Unsuccessful S3 get_object response. Status - {status}")
 
 
 with DAG (
