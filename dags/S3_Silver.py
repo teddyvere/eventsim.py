@@ -12,7 +12,6 @@ from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 def get_json_from_s3(**context):
     conn_info = Variable.get("AWS_S3_CONN", deserialize_json=True)
     s3_key = f"eventsim/date_id={context['exec_date']}.json"
-    print("s3_key", s3_key)
     # Creating Session with Boto3
     s3_session = boto3.client(
         's3',
@@ -22,17 +21,14 @@ def get_json_from_s3(**context):
     # Creating Object From the S3 Resource
     obj = s3_session.get_object(Bucket='eventsim', 
                                 Key=s3_key)
+    
+    # Reading Json from S3
+    file_content = obj.get()['Body'].read().decode('utf-8')
+    json_data = json.loads(file_content)
 
-    if obj == 200:
-        print(f"Success S3 get_object response {obj}")
-        file_content = obj.get()['Body'].read().decode('utf-8')
-        json_data = json.loads(file_content)
-
-        df = pd.DataFrame(json_data)
-        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
-        print(df)
-    else:
-        print(f"Unsuccessful S3 get_object response {obj}")
+    df = pd.DataFrame(json_data)
+    df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
+    print(df)
 
 
 with DAG (
