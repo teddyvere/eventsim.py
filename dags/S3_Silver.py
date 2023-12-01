@@ -21,11 +21,13 @@ def get_json_from_s3(ti):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    obj = s3_session.object('eventsim', 'eventsim/date_id=2023-12-01.json')
-    
-    # Reading the File as String With Encoding
-    file_content = obj.get()['Body'].read().decode('utf-8')
-    json_data = json.loads(file_content)
+    obj = s3_session.get_object('eventsim', 'eventsim/date_id=2023-12-01.json')
+
+    if obj == 200:
+        file_content = obj.get()['Body'].read().decode('utf-8')
+        json_data = json.loads(file_content)
+    else:
+        print(f"Unsuccessful S3 get_object response {obj}")
 
 
 with DAG (
