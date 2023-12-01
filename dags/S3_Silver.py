@@ -22,11 +22,16 @@ def get_json_from_s3(ti):
     )
     # Creating Object From the S3 Resource
     obj = s3_session.get_object(Bucket='eventsim', 
-                                Key='eventsim/date_id=2023-12-01.json')
+                                Key="eventsim/date_id='{{ds}}'.json")
 
     if obj == 200:
+        print(f"Success S3 get_object response {obj}")
         file_content = obj.get()['Body'].read().decode('utf-8')
         json_data = json.loads(file_content)
+
+        df = pd.DataFrame(json_data)
+        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
+        print(df)
     else:
         print(f"Unsuccessful S3 get_object response {obj}")
 
@@ -53,3 +58,5 @@ with DAG (
         python_callable=get_json_from_s3,
         provide_context=True
     )
+
+S3_key_sensor >> read_json_on_s3
