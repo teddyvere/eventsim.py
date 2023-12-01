@@ -21,18 +21,24 @@ def get_json_from_s3(**context):
     # Creating Object From the S3 Resource
     response = s3_client.get_object(Bucket='eventsim', 
                                 Key='eventsim/date_id=2023-12-01.json')
+    
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
     if status == 200: 
     # Reading Json from S3
-        file_content = response.get("Body").read().decode('utf-8')
-        json_data = json.loads(file_content)
-        df = pd.DataFrame(json_data)
-        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
-        print(df)
+        file_content = response.get("Body")['body']
+        chunk_size=300000
+        while True:
+            chunk = file_content.read(chunk_size).decode('utf-8')
+            if chunk:
+                json_data = json.loads(file_content)
+                df = pd.DataFrame(json_data)
+                df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/10000))
+                print(df)
+            else:
+                break
     else:
-        print(f"Unsuccessful S3 get_object response. Status - {status}")
-
+        raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
 
 with DAG (
     dag_id='S3_bronze_to_silver',
