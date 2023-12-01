@@ -22,7 +22,7 @@ def get_json_from_s3(**context):
     response = s3_client.get_object(Bucket='eventsim', 
                                 Key='eventsim/date_id=2023-12-01.json')
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
-    print(status)
+    print(response.get())
     if status == 200: 
     # Reading Json from S3
         file_content = response.get()['Body'].read().decode('utf-8')
