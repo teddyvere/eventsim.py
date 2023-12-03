@@ -19,8 +19,7 @@ def create_silver_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    s3_key = f"eventsim/date_id=2023-12-03-test.csv"
-    print(s3_key)
+    s3_key = f"eventsim/date_id={{context['execution_date']}}-test.csv"
     response = s3_client.get_object(Bucket='eventsim', 
                                     Key=s3_key)
     
@@ -47,7 +46,6 @@ def create_silver_from_s3(**context):
             for yyyymmdd in df_chunk['date_id'].unique():
                 df_daily = df_chunk[df_chunk.date_id==yyyymmdd]
                 # Check whether daily dataframe is already exist on S3
-                print('='*50)
                 try:
                     response = s3_client.get_object(
                         Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv'
