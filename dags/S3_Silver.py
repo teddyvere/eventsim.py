@@ -20,7 +20,8 @@ def create_silver_from_s3(**context):
     )
     # Creating Object From the S3 Resource
     s3_key = f"eventsim/date_id={context['execution_date']}-test.csv"
-    response = s3_client.get_object(Bucket='eventsim', Key='eventsim/date_id=2023-12-01-test.csv')
+    response = s3_client.get_object(Bucket='eventsim', 
+                                    Key=s3_key)
     
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
@@ -28,44 +29,46 @@ def create_silver_from_s3(**context):
     # Reading Json from S3
         file_content = response.get("Body")
         chunk_size=30000
-        while True:
-            chunk = file_content.read(chunk_size)
-            print(chunk)
-            if chunk:
-                df = pd.read_csv(chunk)
-                df['date_id'] = df['ts'].map(
-                    lambda ts: datetime.strftime(
-                        datetime.fromtimestamp(ts/1000), '%Y-%m-%d'
-                        )
+        cols = [
+            'ts','userId','sessionId','page','auth','method',
+            'status','level','itemInSession','location','userAgent','lastName',
+            'firstName','registration','gender','artist','song','length','date_id'
+        ]
+        for chunk in pd.read_csv(file_content, chunksize=chunk_size):
+            df_chunk = pd.DataFrame(chunk, columns=cols)
+            # Convert timestamp to date_id
+            df_chunk['date_id'] = df_chunk['ts'].map(
+                lambda ts: datetime.strftime(
+                    datetime.fromtimestamp(ts/1000), '%Y-%m-%d'
                     )
-                for yyyymmdd in df['date_id'].unique():
-                    df_daily = df[df.date_id==yyyymmdd]
-                    # Check whether daily dataframe is already exist on S3
-                    response = s3_client.get_object(
-                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
-                        )
-                    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
-                    # Found daily dataframe on S3 -> append
-                    if status == 200:
-                        df_exist = pd.read_csv(response.get("Body"))
-                        df_merge = pd.merge([df_exist, df_daily], axis=0)
-                    # Cannot find daily dataframe on S3 -> newly insert
-                    elif status == 404:
-                        df_merge = df_daily  
-                    else:
-                        raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
+                )
+            # Put object by date_id
+            for yyyymmdd in df_chunk['date_id'].unique():
+                df_daily = df_chunk[df_chunk.date_id==yyyymmdd]
+                # Check whether daily dataframe is already exist on S3
+                response = s3_client.get_object(
+                    Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
+                    )
+                status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+                # Found daily dataframe on S3 -> append
+                if status == 200:
+                    df_exist = pd.read_csv(response.get("Body"))
+                    df_merge = pd.merge([df_exist, df_daily], axis=0)
+                # Cannot find daily dataframe on S3 -> newly insert
+                elif status == 404:
+                    df_merge = df_daily  
+                else:
+                    raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
                     # Update daily dataframe on S3
-                    with io.StringIO() as csv_buffer:
-                        df_merge.to_csv(csv_buffer, index=False)
-                        response = s3_client.put_object(
-                            Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv', Body=csv_buffer.getvalue()
-                        )
-                        if status == 200:
-                            print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
-                        else:
-                            print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
-            else:
-                break
+                with io.StringIO() as csv_buffer:
+                    df_merge.to_csv(csv_buffer, index=False)
+                    response = s3_client.put_object(
+                        Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv', Body=csv_buffer.getvalue()
+                    )
+                    if status == 200:
+                        print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
+                    else:
+                        print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
     else:
         raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
 
