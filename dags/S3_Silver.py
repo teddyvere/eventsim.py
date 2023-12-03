@@ -46,20 +46,15 @@ def create_silver_from_s3(**context):
             for yyyymmdd in df_chunk['date_id'].unique():
                 df_daily = df_chunk[df_chunk.date_id==yyyymmdd]
                 # Check whether daily dataframe is already exist on S3
-                response = s3_client.get_object(
-                    Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
-                    )
-                status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
-                # Found daily dataframe on S3 -> append
-                if status == 200:
+                try:
+                    response = s3_client.get_object(
+                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
+                        )
                     df_exist = pd.read_csv(response.get("Body"))
                     df_merge = pd.merge([df_exist, df_daily], axis=0)
                 # Cannot find daily dataframe on S3 -> newly insert
-                elif status == 404:
+                except:
                     df_merge = df_daily  
-                else:
-                    raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
-                    # Update daily dataframe on S3
                 with io.StringIO() as csv_buffer:
                     df_merge.to_csv(csv_buffer, index=False)
                     response = s3_client.put_object(
