@@ -50,12 +50,12 @@ def create_silver_from_s3(**context):
                 print('='*50)
                 try:
                     response = s3_client.get_object(
-                        Bucket='eventsim', key=f'silver/date_id={yyyymmdd}.csv'
+                        Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv'
                         )
                     df_exist = pd.read_csv(response.get("Body"))
                     df_merge = pd.merge([df_exist, df_daily], axis=0)
                 # Cannot find daily dataframe on S3 -> newly insert
-                except NoSuchKey:
+                except:
                     df_merge = df_daily  
                 with io.StringIO() as csv_buffer:
                     df_merge.to_csv(csv_buffer, index=False)
