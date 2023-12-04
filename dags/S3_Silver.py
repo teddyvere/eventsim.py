@@ -19,9 +19,10 @@ def create_silver_from_s3(**context):
         aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']
     )
     # Creating Object From the S3 Resource
-    s3_key = f"eventsim/date_id={{context['execution_date']}}-test.csv"
+    s3_key = f"eventsim/date_id={{context['execution_date']}}.csv"
+    print(s3_key)
     response = s3_client.get_object(Bucket='eventsim', 
-                                    Key='eventsim/date_id=2023-12-04-test.csv')
+                                    Key=s3_key)
     
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
