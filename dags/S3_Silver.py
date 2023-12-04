@@ -43,29 +43,29 @@ def create_silver_from_s3(**context):
                     )
                 )
             # Put object by date_id
-            for yyyymmdd in df_chunk['date_id'].unique():
-                df_daily = df_chunk[df_chunk.date_id==yyyymmdd]
+            for date_id, df_date in df_chunk.groupby(['date_id']):
                 # Check whether daily dataframe is already exist on S3
                 try:
                     response = s3_client.get_object(
-                        Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv'
+                        Bucket='eventsim', Key=f'silver/date_id={date_id}/0.csv'
                         )
                     df_exist = pd.read_csv(response.get("Body"))
-                    df_merge = pd.merge([df_exist, df_daily], axis=0)
+                    df_merge = pd.merge([df_exist, df_date], axis=0)
                 # Cannot find daily dataframe on S3 -> newly insert
                 except:
-                    df_merge = df_daily  
+                    df_merge = df_date  
                 with io.StringIO() as csv_buffer:
                     df_merge.to_csv(csv_buffer, index=False)
                     response = s3_client.put_object(
-                        Bucket='eventsim', Key=f'silver/date_id={yyyymmdd}.csv', Body=csv_buffer.getvalue()
+                        Bucket='eventsim', Key=f'silver/date_id={date_id}/0.csv', Body=csv_buffer.getvalue()
                     )
                     if status == 200:
-                        print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
+                        print(f"S3 put_object response. Status - {status} Date - {date_id} No.Records - {len(df_merge)}")
                     else:
-                        print(f"S3 put_object response. Status - {status} Date - {yyyymmdd} No.Records - {len(df_merge)}")
+                        print(f"S3 put_object response. Status - {status} Date - {date_id} No.Records - {len(df_merge)}")
     else:
         raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
+
 
 with DAG (
     dag_id='S3_bronze_to_silver',
