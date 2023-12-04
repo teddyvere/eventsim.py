@@ -84,11 +84,11 @@ with DAG (
         timeout=300
     )
 
-    create_silver_s3 = PythonOperator(
+    create_silver_S3 = PythonOperator(
         task_id="create_silver_s3",
         python_callable=create_silver_from_s3,
         provide_context=True
     )
 
-S3_key_sensor >> create_silver_s3
+S3_key_sensor >> create_silver_S3
 
