@@ -47,7 +47,7 @@ def create_silver_from_s3(**context):
                 # Check whether daily dataframe is already exist on S3
                 try:
                     response = s3_client.get_object(
-                        Bucket='eventsim', Key=f'silver/date_id={date_id}/0.csv'
+                        Bucket='eventsim', Key=f'silver/date_id={date_id[0]}/0.csv'
                         )
                     df_exist = pd.read_csv(response.get("Body"))
                     df_merge = pd.merge([df_exist, df_date], axis=0)
@@ -57,12 +57,12 @@ def create_silver_from_s3(**context):
                 with io.StringIO() as csv_buffer:
                     df_merge.to_csv(csv_buffer, index=False)
                     response = s3_client.put_object(
-                        Bucket='eventsim', Key=f'silver/date_id={date_id}/0.csv', Body=csv_buffer.getvalue()
+                        Bucket='eventsim', Key=f'silver/date_id={date_id[0]}/0.csv', Body=csv_buffer.getvalue()
                     )
                     if status == 200:
-                        print(f"S3 put_object response. Status - {status} Date - {date_id} No.Records - {len(df_merge)}")
+                        print(f"S3 put_object response. Status - {status} Date - {date_id[0]} No.Records - {len(df_merge)}")
                     else:
-                        print(f"S3 put_object response. Status - {status} Date - {date_id} No.Records - {len(df_merge)}")
+                        print(f"S3 put_object response. Status - {status} Date - {date_id[0]} No.Records - {len(df_merge)}")
     else:
         raise Exception(f"Unsuccessful S3 get_object response. Status - {status}")
 
