@@ -20,6 +20,7 @@ def create_silver_from_s3(**context):
     )
     # Creating Object From the S3 Resource
     s3_key = f"eventsim/date_id={context['execution_date']}.csv"
+    print(s3_key)
     response = s3_client.get_object(Bucket='eventsim', 
                                     Key=s3_key)
     
