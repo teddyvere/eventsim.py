@@ -13,3 +13,5 @@ with DAG (
         task_id='spark_submit',
         application='supports/spark_operator.py'
     )
+
+spark_submit
