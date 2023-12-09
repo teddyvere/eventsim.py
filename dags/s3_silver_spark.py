@@ -11,7 +11,8 @@ with DAG (
 ) as dag:
     spark_submit = SparkSubmitOperator(
         task_id='spark_submit',
-        application='supports/spark_operator.py'
+        application='supports/spark_operator.py',
+        conn_id='spark_connection'
     )
 
 spark_submit
