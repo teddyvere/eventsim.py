@@ -5,11 +5,7 @@ from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession, functions as f
 
 
-conf = SparkConf()
-conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-conf.set("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2")
-
-spark = SparkSession.builder.config(conf=conf).appName("s3_injection").getOrCreate()
+spark = SparkSession(SparkContext(conf=SparkConf())).getOrCreate()
 
 df = spark.read.format("csv")\
           .option("header", "true")\

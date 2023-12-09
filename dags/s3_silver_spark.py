@@ -12,7 +12,11 @@ with DAG (
     spark_submit = SparkSubmitOperator(
         task_id='spark_submit',
         application='supports/spark_operator.py',
-        conn_id='spark_connection'
+        conn_id='spark_connection',
+        conf={
+            "spark.hadoop.fs.s3a.impl": "org.apache.hadoop.fs.s3a.S3AFileSystem",
+            "spark.jars.packages": "org.apache.hadoop:hadoop-aws:3.3.2"
+        }
     )
 
 spark_submit
