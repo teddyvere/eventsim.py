@@ -1,0 +1,452 @@
+[
+    {
+        "label": "datetime",
+        "importPath": "dateimte",
+        "description": "dateimte",
+        "isExtraImport": true,
+        "detail": "dateimte",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "SparkConf",
+        "importPath": "pyspark",
+        "description": "pyspark",
+        "isExtraImport": true,
+        "detail": "pyspark",
+        "documentation": {}
+    },
+    {
+        "label": "SparkContext",
+        "importPath": "pyspark",
+        "description": "pyspark",
+        "isExtraImport": true,
+        "detail": "pyspark",
+        "documentation": {}
+    },
+    {
+        "label": "SparkSession",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "functions",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "SparkSession",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "functions",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "Row",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "types",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "boto3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "boto3",
+        "description": "boto3",
+        "detail": "boto3",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "DAG",
+        "importPath": "airflow",
+        "description": "airflow",
+        "isExtraImport": true,
+        "detail": "airflow",
+        "documentation": {}
+    },
+    {
+        "label": "Variable",
+        "importPath": "airflow.models",
+        "description": "airflow.models",
+        "isExtraImport": true,
+        "detail": "airflow.models",
+        "documentation": {}
+    },
+    {
+        "label": "PythonOperator",
+        "importPath": "airflow.operators.python",
+        "description": "airflow.operators.python",
+        "isExtraImport": true,
+        "detail": "airflow.operators.python",
+        "documentation": {}
+    },
+    {
+        "label": "S3KeySensor",
+        "importPath": "airflow.providers.amazon.aws.sensors.s3",
+        "description": "airflow.providers.amazon.aws.sensors.s3",
+        "isExtraImport": true,
+        "detail": "airflow.providers.amazon.aws.sensors.s3",
+        "documentation": {}
+    },
+    {
+        "label": "S3KeySensor",
+        "importPath": "airflow.providers.amazon.aws.sensors.s3",
+        "description": "airflow.providers.amazon.aws.sensors.s3",
+        "isExtraImport": true,
+        "detail": "airflow.providers.amazon.aws.sensors.s3",
+        "documentation": {}
+    },
+    {
+        "label": "DummyOperator",
+        "importPath": "airflow.operators.dummy_operator",
+        "description": "airflow.operators.dummy_operator",
+        "isExtraImport": true,
+        "detail": "airflow.operators.dummy_operator",
+        "documentation": {}
+    },
+    {
+        "label": "PythonOperator",
+        "importPath": "airflow.operators.python_operator",
+        "description": "airflow.operators.python_operator",
+        "isExtraImport": true,
+        "detail": "airflow.operators.python_operator",
+        "documentation": {}
+    },
+    {
+        "label": "PostgresOperator",
+        "importPath": "airflow.providers.postgres.operators.postgres",
+        "description": "airflow.providers.postgres.operators.postgres",
+        "isExtraImport": true,
+        "detail": "airflow.providers.postgres.operators.postgres",
+        "documentation": {}
+    },
+    {
+        "label": "SqlSensor",
+        "importPath": "airflow.sensors.sql",
+        "description": "airflow.sensors.sql",
+        "isExtraImport": true,
+        "detail": "airflow.sensors.sql",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "SparkSubmitOperator",
+        "importPath": "airflow.contrib.operators.spark_submit_operator",
+        "description": "airflow.contrib.operators.spark_submit_operator",
+        "isExtraImport": true,
+        "detail": "airflow.contrib.operators.spark_submit_operator",
+        "documentation": {}
+    },
+    {
+        "label": "S3ToSqlOperator",
+        "importPath": "airflow.providers.amazon.aws.transfers.s3_to_sql",
+        "description": "airflow.providers.amazon.aws.transfers.s3_to_sql",
+        "isExtraImport": true,
+        "detail": "airflow.providers.amazon.aws.transfers.s3_to_sql",
+        "documentation": {}
+    },
+    {
+        "label": "task_group",
+        "importPath": "airflow.decorators",
+        "description": "airflow.decorators",
+        "isExtraImport": true,
+        "detail": "airflow.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "BashOperator",
+        "importPath": "airflow.operators.bash",
+        "description": "airflow.operators.bash",
+        "isExtraImport": true,
+        "detail": "airflow.operators.bash",
+        "documentation": {}
+    },
+    {
+        "label": "EmptyOperator",
+        "importPath": "airflow.operators.empty",
+        "description": "airflow.operators.empty",
+        "isExtraImport": true,
+        "detail": "airflow.operators.empty",
+        "documentation": {}
+    },
+    {
+        "label": "Label",
+        "importPath": "airflow.utils.edgemodifier",
+        "description": "airflow.utils.edgemodifier",
+        "isExtraImport": true,
+        "detail": "airflow.utils.edgemodifier",
+        "documentation": {}
+    },
+    {
+        "label": "put_by_date_id",
+        "kind": 2,
+        "importPath": "dags.supports.spark_operator",
+        "description": "dags.supports.spark_operator",
+        "peekOfCode": "def put_by_date_id(date_id, table):\n    key = f\"s3a://eventsim/silver1/date_id={date_id}/test0.csv\"\n    table.write.mode(\"overwrite\").parquet(key)\ngrouped_df.foreach(lambda x: put_by_date_id(x[0], x[1]))",
+        "detail": "dags.supports.spark_operator",
+        "documentation": {}
+    },
+    {
+        "label": "spark",
+        "kind": 5,
+        "importPath": "dags.supports.spark_operator",
+        "description": "dags.supports.spark_operator",
+        "peekOfCode": "spark = SparkSession(SparkContext(conf=SparkConf())).getOrCreate()\ndf = spark.read.format(\"csv\")\\\n          .option(\"header\", \"true\")\\\n          .option(\"inferSchema\", \"true\")\\\n          .csv(\"s3a://eventsim/eventsim/date_id=2023-12-04-test.csv\")\n# contert timestamp to datetime\ndf.withColumn(\"ts\", f.to_timestamp(f.col(\"ts\")))\\\n  .withColumn(\"date_id\", f.to_date(f.col(\"ts\")))\ngrouped_df = df.groupBy(\"date_id\")\ndef put_by_date_id(date_id, table):",
+        "detail": "dags.supports.spark_operator",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "dags.supports.spark_operator",
+        "description": "dags.supports.spark_operator",
+        "peekOfCode": "df = spark.read.format(\"csv\")\\\n          .option(\"header\", \"true\")\\\n          .option(\"inferSchema\", \"true\")\\\n          .csv(\"s3a://eventsim/eventsim/date_id=2023-12-04-test.csv\")\n# contert timestamp to datetime\ndf.withColumn(\"ts\", f.to_timestamp(f.col(\"ts\")))\\\n  .withColumn(\"date_id\", f.to_date(f.col(\"ts\")))\ngrouped_df = df.groupBy(\"date_id\")\ndef put_by_date_id(date_id, table):\n    key = f\"s3a://eventsim/silver1/date_id={date_id}/test0.csv\"",
+        "detail": "dags.supports.spark_operator",
+        "documentation": {}
+    },
+    {
+        "label": "grouped_df",
+        "kind": 5,
+        "importPath": "dags.supports.spark_operator",
+        "description": "dags.supports.spark_operator",
+        "peekOfCode": "grouped_df = df.groupBy(\"date_id\")\ndef put_by_date_id(date_id, table):\n    key = f\"s3a://eventsim/silver1/date_id={date_id}/test0.csv\"\n    table.write.mode(\"overwrite\").parquet(key)\ngrouped_df.foreach(lambda x: put_by_date_id(x[0], x[1]))",
+        "detail": "dags.supports.spark_operator",
+        "documentation": {}
+    },
+    {
+        "label": "create_silver_from_s3",
+        "kind": 2,
+        "importPath": "dags.S3_Silver",
+        "description": "dags.S3_Silver",
+        "peekOfCode": "def create_silver_from_s3(**context):\n    conn_info = Variable.get(\"AWS_S3_CONN\", deserialize_json=True)\n    # Creating Session with Boto3\n    s3_client = boto3.client(\n        's3',\n        aws_access_key_id=conn_info['AWS_ACCESS_KEY_ID'],\n        aws_secret_access_key=conn_info['AWS_SECRET_ACCESS_KEY']\n    )\n    # Creating Object From the S3 Resource\n    s3_key = f\"eventsim/date_id={context['execution_date'].strftime('%Y-%m-%d')}.csv\"",
+        "detail": "dags.S3_Silver",
+        "documentation": {}
+    },
+    {
+        "label": "print_hello",
+        "kind": 2,
+        "importPath": "dags.first_dag",
+        "description": "dags.first_dag",
+        "peekOfCode": "def print_hello():\n    print('TEST FOR GOODC')\nwith DAG('sample_dag',\n         description='A simple DAG',\n         schedule_interval='0 * * * *',\n         start_date=datetime(2023, 11, 22),\n         catchup=False) as dag:\n    task1 = PythonOperator(task_id='print_hello_task',\n                           python_callable=print_hello,\n                           dag=dag)",
+        "detail": "dags.first_dag",
+        "documentation": {}
+    },
+    {
+        "label": "default_args",
+        "kind": 5,
+        "importPath": "dags.postgres_loader",
+        "description": "dags.postgres_loader",
+        "peekOfCode": "default_args = {\n    'owner': 'airflow',\n    'start_date': datetime(2023, 11, 25)\n}\nwith DAG('postgres_loader',\n         description='PostgreSQL Loader Example',\n         default_args=default_args,\n         schedule='0 * * * *',\n         catchup=False) as dag:\n    sql_query = '''",
+        "detail": "dags.postgres_loader",
+        "documentation": {}
+    },
+    {
+        "label": "convert_timestamp_to_date",
+        "kind": 2,
+        "importPath": "dags.preprocessing",
+        "description": "dags.preprocessing",
+        "peekOfCode": "def convert_timestamp_to_date(ts):\n    obj = datetime.fromtimestamp(ts/1000)\n    return datetime.strftime(obj, '%Y-%m-%d')\nspark = SparkSession.Builder().appName(\"eventsim\").getOrCreate()\ndf = spark.read.option(\"multiline\", \"true\").json('file_path')\n# Convert timestamp to date\nconvert_timestamp_udf = f.udf(convert_timestamp_to_date)\ndf = df.withColumn('date', convert_timestamp_udf(f.col(\"ts\")))\n# DAU and Session Counts\ndf.groupBy(\"date\") \\",
+        "detail": "dags.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "spark",
+        "kind": 5,
+        "importPath": "dags.preprocessing",
+        "description": "dags.preprocessing",
+        "peekOfCode": "spark = SparkSession.Builder().appName(\"eventsim\").getOrCreate()\ndf = spark.read.option(\"multiline\", \"true\").json('file_path')\n# Convert timestamp to date\nconvert_timestamp_udf = f.udf(convert_timestamp_to_date)\ndf = df.withColumn('date', convert_timestamp_udf(f.col(\"ts\")))\n# DAU and Session Counts\ndf.groupBy(\"date\") \\\n    .agg(\n        f.countDistinct(\"userId\").alias(\"DAU\"),\n        f.count(\"sessionId\").alias(\"Sessions\")",
+        "detail": "dags.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "dags.preprocessing",
+        "description": "dags.preprocessing",
+        "peekOfCode": "df = spark.read.option(\"multiline\", \"true\").json('file_path')\n# Convert timestamp to date\nconvert_timestamp_udf = f.udf(convert_timestamp_to_date)\ndf = df.withColumn('date', convert_timestamp_udf(f.col(\"ts\")))\n# DAU and Session Counts\ndf.groupBy(\"date\") \\\n    .agg(\n        f.countDistinct(\"userId\").alias(\"DAU\"),\n        f.count(\"sessionId\").alias(\"Sessions\")\n        ).show()",
+        "detail": "dags.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "convert_timestamp_udf",
+        "kind": 5,
+        "importPath": "dags.preprocessing",
+        "description": "dags.preprocessing",
+        "peekOfCode": "convert_timestamp_udf = f.udf(convert_timestamp_to_date)\ndf = df.withColumn('date', convert_timestamp_udf(f.col(\"ts\")))\n# DAU and Session Counts\ndf.groupBy(\"date\") \\\n    .agg(\n        f.countDistinct(\"userId\").alias(\"DAU\"),\n        f.count(\"sessionId\").alias(\"Sessions\")\n        ).show()\n# DAU by Gender\ndf.groupBy(\"date\", \"gender\").agg(f.countDistinct(\"userId\").alias(\"DAU_by_gender\")).show()",
+        "detail": "dags.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "dags.preprocessing",
+        "description": "dags.preprocessing",
+        "peekOfCode": "df = df.withColumn('date', convert_timestamp_udf(f.col(\"ts\")))\n# DAU and Session Counts\ndf.groupBy(\"date\") \\\n    .agg(\n        f.countDistinct(\"userId\").alias(\"DAU\"),\n        f.count(\"sessionId\").alias(\"Sessions\")\n        ).show()\n# DAU by Gender\ndf.groupBy(\"date\", \"gender\").agg(f.countDistinct(\"userId\").alias(\"DAU_by_gender\")).show()\n# Top 10 Location with Users",
+        "detail": "dags.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "json_parser",
+        "kind": 2,
+        "importPath": "dags.s3_to_postgres",
+        "description": "dags.s3_to_postgres",
+        "peekOfCode": "def json_parser(filepath):\n    import json\n    from datetime import datetime\n    import pandas as pd\n    with open(filepath) as f:\n        json_data = json.load(f)\n        df = pd.DataFrame(json_data['body'])\n        df['ts'] = df['ts'].map(lambda ts: datetime.fromtimestamp(ts/1000))\n        return df.values\nwith DAG(",
+        "detail": "dags.s3_to_postgres",
+        "documentation": {}
+    }
+]
